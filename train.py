@@ -54,7 +54,8 @@ def train(
     scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer=optimizer,
         max_lr=data_config["INIT_LR"],
-        steps_per_epoch=len(train_dl),
+        # steps_per_epoch=len(train_dl),
+        steps_per_epoch = 1000,
         epochs=data_config["EPOCHS"],
         pct_start=0.05,
     )

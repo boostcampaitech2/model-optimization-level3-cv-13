@@ -17,6 +17,20 @@ from torchvision.datasets import ImageFolder, VisionDataset
 from src.utils.data import weights_for_balanced_classes
 from src.utils.torch_utils import split_dataset_index
 
+from nvidia.dali import pipeline_def
+import nvidia.dali.fn as fn
+import nvidia.dali.types as types
+from nvidia.dali.plugin.pytorch import DALIGenericIterator
+
+@pipeline_def
+def simple_pipeline(image_dir):
+    jpegs, labels = fn.readers.file(file_root=image_dir)
+    images = fn.decoders.image(jpegs, device='mixed')
+    images = fn.resize(images, size=(32*1.2, 32*1.2))
+    images = fn.crop_mirror_normalize(images)
+
+    return images, labels
+
 
 def create_dataloader(
     config: Dict[str, Any],
@@ -84,7 +98,11 @@ def get_dataset(
         val_path = os.path.join(data_path, "val")
         test_path = os.path.join(data_path, "test")
 
-        train_dataset = ImageFolder(root=train_path, transform=transform_train)
+        pipe = simple_pipeline(batch_size=64, num_threads=8, device_id=0, image_dir=train_path)
+        pipe.build()
+
+        train_dataset = DALIGenericIterator([pipe], ['data', 'label'])
+        # train_dataset = ImageFolder(root=train_path, transform=transform_train)
         val_dataset = ImageFolder(root=val_path, transform=transform_test)
         test_dataset = ImageFolder(root=test_path, transform=transform_test)
 
@@ -114,14 +132,15 @@ def get_dataloader(
 ) -> Tuple[DataLoader, DataLoader, DataLoader]:
     """Get dataloader for training and testing."""
 
-    train_loader = DataLoader(
-        dataset=train_dataset,
-        pin_memory=(torch.cuda.is_available()),
-        shuffle=True,
-        batch_size=batch_size,
-        num_workers=10,
-        drop_last=True
-    )
+    # train_loader = DataLoader(
+    #     dataset=train_dataset,
+    #     pin_memory=(torch.cuda.is_available()),
+    #     shuffle=True,
+    #     batch_size=batch_size,
+    #     num_workers=10,
+    #     drop_last=True
+    # )
+    train_loader = train_dataset
     valid_loader = DataLoader(
         dataset=val_dataset,
         pin_memory=(torch.cuda.is_available()),
