@@ -45,7 +45,7 @@ def train(
     model_instance.model.to(device)
 
     # Create dataloader
-    train_dl, val_dl, test_dl = create_dataloader(data_config)
+    train_dl, val_dl = create_dataloader(data_config)
 
     # Create optimizer, scheduler, criterion
     optimizer = torch.optim.SGD(
@@ -55,7 +55,7 @@ def train(
         optimizer=optimizer,
         max_lr=data_config["INIT_LR"],
         # steps_per_epoch=len(train_dl),
-        steps_per_epoch = 1000,
+        steps_per_epoch = 245,
         epochs=data_config["EPOCHS"],
         pct_start=0.05,
     )
@@ -84,13 +84,13 @@ def train(
     best_acc, best_f1 = trainer.train(
         train_dataloader=train_dl,
         n_epoch=data_config["EPOCHS"],
-        val_dataloader=val_dl if val_dl else test_dl,
+        val_dataloader=val_dl
     )
 
     # evaluate model with test set
     model_instance.model.load_state_dict(torch.load(model_path))
     test_loss, test_f1, test_acc = trainer.test(
-        model=model_instance.model, test_dataloader=val_dl if val_dl else test_dl
+        model=model_instance.model, test_dataloader=val_dl
     )
     return test_loss, test_f1, test_acc
 
