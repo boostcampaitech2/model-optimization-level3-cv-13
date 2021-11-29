@@ -133,7 +133,7 @@ class TorchTrainer:
         for epoch in range(n_epoch):
             running_loss, correct, total = 0.0, 0, 0
             preds, gt = [], []
-            pbar = tqdm(enumerate(train_dataloader))
+            pbar = tqdm(enumerate(train_dataloader), total=len(train_dataloader))
             self.model.train()
             
             for batch, d in pbar:
@@ -218,7 +218,7 @@ class TorchTrainer:
         num_classes = 6
         label_list = [i for i in range(num_classes)]
 
-        pbar = tqdm(enumerate(test_dataloader))
+        pbar = tqdm(enumerate(test_dataloader), total=len(test_dataloader))
         model.to(self.device)
         model.eval()
         for batch, d in pbar:
