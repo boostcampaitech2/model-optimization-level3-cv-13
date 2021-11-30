@@ -12,6 +12,10 @@ from src.modules.invertedresidualv3 import (InvertedResidualv3,
 from src.modules.linear import Linear, LinearGenerator
 from src.modules.poolings import (AvgPoolGenerator, GlobalAvgPool,
                                   GlobalAvgPoolGenerator, MaxPoolGenerator)
+from src.modules.mbconv import (MBConv,
+                                MBConvGenerator)
+from src.modules.fire import (Fire, FireGenerator)
+
 
 __all__ = [
     "ModuleGenerator",
@@ -34,4 +38,8 @@ __all__ = [
     "GlobalAvgPoolGenerator",
     "InvertedResidualv2Generator",
     "InvertedResidualv3Generator",
+    "MBConv",
+    "MBConvGenerator",
+    "Fire",
+    "FireGenerator"
 ]
