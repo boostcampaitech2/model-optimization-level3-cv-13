@@ -63,9 +63,6 @@ def search_model(trial: optuna.trial.Trial):
     model.append([m1_repeat, m1, m1_args])
 
     # Module 2
-    # m2 = trial.suggest_categorical(
-    #     "m2", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "Fire","Pass"]
-    # )
     m2 = trial.suggest_categorical(
         "m2", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "MBConv","Fire" ,"Pass"]
     )
@@ -121,10 +118,6 @@ def search_model(trial: optuna.trial.Trial):
         model.append([m2_repeat, m2, m2_args])
 
     # Module 3
-    # m3 = trial.suggest_categorical(
-    #     "m3", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "Fire","Pass"]
-    # )
-
     m3 = trial.suggest_categorical(
         "m3", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "MBConv","Fire", "Pass"]
     )
@@ -177,10 +170,6 @@ def search_model(trial: optuna.trial.Trial):
         model.append([m3_repeat, m3, m3_args])
 
     # Module 4
-    # m4 = trial.suggest_categorical(
-    #     "m4", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "Fire","Pass"]
-    # )
-
     m4 = trial.suggest_categorical(
         "m4", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "MBConv","Fire", "Pass"]
     )
@@ -236,10 +225,6 @@ def search_model(trial: optuna.trial.Trial):
         model.append([m4_repeat, m4, m4_args])
 
     # Module 5
-    # m5 = trial.suggest_categorical(
-    #     "m5", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "Fire","Pass"]
-    # )
-
     m5 = trial.suggest_categorical(
         "m5", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "MBConv", "Fire", "Pass"]
     )
@@ -296,10 +281,6 @@ def search_model(trial: optuna.trial.Trial):
         model.append([m5_repeat, m5, m5_args])
 
     # Module 6
-    # m6 = trial.suggest_categorical(
-    #     "m6", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "Fire","Pass"]
-    # )
-
     m6 = trial.suggest_categorical(
         "m6", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "MBConv","Fire", "Pass"]
     )
@@ -355,10 +336,6 @@ def search_model(trial: optuna.trial.Trial):
         model.append([m6_repeat, m6, m6_args])
 
     # Module 7
-    # m7 = trial.suggest_categorical(
-    #     "m7", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "Fire", "Pass"]
-    # )
-
     m7 = trial.suggest_categorical(
         "m7", ["Conv", "DWConv", "InvertedResidualv2", "InvertedResidualv3", "MBConv","Fire", "Pass"]
     )
