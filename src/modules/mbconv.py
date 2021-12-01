@@ -165,7 +165,7 @@ class MBConvGenerator(GeneratorAbstract):
         repeat(=n), [c, t, s] // note original notation from paper is [t, c, n, s]
         """
         module = []
-        t, c, s, k = self.args  # c is equivalent as self.out_channel
+        t, k, s = self.args[1:]  # c is equivalent as self.out_channel # c, csms 지우기,t: expand_ratiom, s: stride, k = kernel_size
         inp, oup = self.in_channel, self.out_channel
         for i in range(repeat):
             stride = s if i == 0 else 1
@@ -174,9 +174,10 @@ class MBConvGenerator(GeneratorAbstract):
                     in_planes=inp,
                     out_planes=oup,
                     expand_ratio=t,
-                    stride=stride,
                     kernel_size=k,
+                    stride=stride
                 )
             )
+            
             inp = oup
         return self._get_module(module)
