@@ -1,0 +1,19 @@
+{
+    "num_epochs": 100,
+    "teacher": {"name" : "ViT",
+              "args" : {"config" : "vit_base_patch16_224",
+                        "num_classes" : 6}},
+    "teacher_dir": "./teachers/best.pt",
+    "student" : "configs/model/mobilenetv3.yaml",
+    "data" : "configs/data/taco.yaml",
+    "criterion": "CustomCriterion",
+    "optimizer": {"name" : "SGD",
+                  "args" : {"lr" : 0.001}},
+    "scheduler":{"name":"ReduceLROnPlateau",
+        "args":{"mode" : "max",
+                "factor" : 0.7,
+                "patience" : 3}},
+    "fp16": true,
+    "alpha" : 0.95,
+    "T" : 6
+}
